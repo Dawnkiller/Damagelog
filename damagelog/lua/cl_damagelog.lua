@@ -1,4 +1,3 @@
-
 include("config/config.lua")
 include("cl_tabs/damagetab.lua")
 include("cl_tabs/settings.lua")
@@ -87,7 +86,9 @@ end)
 
 net.Receive("DL_Ded", function()
 	
-	if net.ReadUInt(1,1) == 1 and Damagelog.RDM_Manager_Window == 1 then
+	if Damagelog.RDM_Manager_Window != 1 then return end
+	
+	if net.ReadUInt(1,1) == 1 then
 	
 		local death_reason = net.ReadString()
 	
@@ -135,4 +136,5 @@ net.Receive("DL_Ded", function()
 	
 	chat.AddText(Color(255,62,62), "[RDM Manager] ", Color(255,255, 255), "You died! Open the report menu using the ", Color(98,176,255), Damagelog.RDM_Manager_Command, Color(255, 255, 255), " command.")
 	
-end)
+end)
+
