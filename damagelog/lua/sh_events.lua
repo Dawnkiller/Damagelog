@@ -1,4 +1,3 @@
-
 Damagelog.events = Damagelog.events or {}
 Damagelog.IncludedEvents = Damagelog.IncludedEvents or {}
 function Damagelog:AddEvent(event, f)
@@ -51,7 +50,6 @@ if SERVER then
 		for _,name in pairs(self.event_hooks) do
 			hook.Add(name, "Damagelog_events_"..name, function(...)
 				for k,v in pairs(self.events) do
-					print(v.Type, v[name])
 					if v[name] then 
 						v[name](v, ...)
 					end
