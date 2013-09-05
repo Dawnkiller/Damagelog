@@ -12,7 +12,6 @@ local event = {}
 event.Type = "NADE"
 
 function event:Initialize()
-	print("ok for grenades")
 	for k,v in pairs(weapons.GetList()) do		
 		if v.Base == "weapon_tttbasegrenade" then
 			v.CreateGrenade = function(gren, src, ang, vel, angimp, ply)

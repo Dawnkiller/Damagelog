@@ -34,7 +34,6 @@ function PANEL:Init()
 		local menuPanel = DermaMenu()
 		menuPanel:AddOption("Force the reported player to respond", function()
 			if IsValid(report.attacker) then
-				print(report.attacker, report.attacker:EntIndex())
 				RunConsoleCommand("DLRDM_ForceVictim", tostring(report.attacker:EntIndex()))
 			else
 				Derma_Message("The reported player isn't valid! (disconnected?)", "Error", "OK")

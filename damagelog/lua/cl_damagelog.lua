@@ -76,7 +76,7 @@ function Damagelog:StrRole(role)
 	else return "innocent" end
 end
 
-net.Receive("InformPlayersDL", function()
+net.Receive("DL_InformSuperAdmins", function()
 	local nick = net.ReadString()
 	local round = net.ReadUInt(8)
 	if nick and round then

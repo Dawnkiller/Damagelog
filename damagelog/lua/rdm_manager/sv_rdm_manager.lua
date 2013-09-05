@@ -197,7 +197,6 @@ end);
 
 concommand.Add("DLRDM_ForceVictim", function(ply, cmd, args)
 	local victim = args[1]
-	print(victim, tonumber(victim), Entity(tonumber(victim)))
 	if tonumber(victim) and IsValid(Entity(tonumber(victim))) then
 		victim = Entity(tonumber(victim))
 		Damagelog.rdmReporter:SendRespond(victim)
