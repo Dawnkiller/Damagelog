@@ -22,20 +22,22 @@ function event:DoPlayerDeath(ply, attacker, dmginfo)
 			[7] = attacker:SteamID()
 		} 
 		self.CallEvent(tbl)
-		net.Start("DL_Ded")
-		if tbl[2] == ROLE_TRAITOR and (tbl[4] == ROLE_INNOCENT or tbl[4] == ROLE_DETECTIVE) then
-			net.WriteUInt(0,1)
-		else
-			net.WriteUInt(1,1)
-			net.WriteString(tbl[1])
+		if GetRoundState() == ROUND_ACTIVE then
+			net.Start("DL_Ded")
+			if tbl[2] == ROLE_TRAITOR and (tbl[4] == ROLE_INNOCENT or tbl[4] == ROLE_DETECTIVE) then
+				net.WriteUInt(0,1)
+			else
+				net.WriteUInt(1,1)
+				net.WriteString(tbl[1])
+			end
+			net.Send(ply)
+			ply:SetNWEntity("DL_Killer", attacker)
+			ply.rdmInfo = {
+				time = Damagelog.Time,
+				round = Damagelog.CurrentRound,
+			}
+			ply.rdmSend = true
 		end
-		net.Send(ply)
-		ply:SetNWEntity("DL_Killer", attacker)
-		ply.rdmInfo = {
-			time = Damagelog.Time,
-			round = Damagelog.CurrentRound,
-		}
-		ply.rdmSend = true
 	end
 end
 
