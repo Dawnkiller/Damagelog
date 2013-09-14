@@ -71,9 +71,9 @@ function PANEL:Init()
 				end
 			end):SetImage("icon16/lightning.png")
 		end
+		hook.Call("DamagelogsAddMenuActions", gmod.GetGamemode(), menuPanel)
 		menuPanel:Open()
 	end
-			
 	
 	self.setState = vgui.Create("DButton", self.ManagerSelection);
 	self.setState:SetText("Set state..");
