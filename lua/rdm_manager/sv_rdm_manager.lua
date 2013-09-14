@@ -20,7 +20,7 @@ function Damagelog.rdmReporter:SendAdmin(ply, index)
 		ply = {};
 		
 		for k, v in pairs(player.GetHumans()) do
-			if (v:IsAdmin()) then
+			if v:CanUseRDMManager() then
 				table.insert(ply, v);
 			end;
 		end;
@@ -131,7 +131,7 @@ function Damagelog.rdmReporter:CanReport(ply)
 			return false, "You are alone!"
 		end
 		for k,v in pairs(player.GetHumans()) do
-			if v:IsAdmin() then
+			if v:CanUseRDMManager() then
 				found_admin = true
 				break
 			end
@@ -241,7 +241,7 @@ end);
 
 hook.Add("PlayerInitialSpawn", "RDM_SendAdmin", function(plt)
 	timer.Simple(4, function()
-		if (IsValid(ply) and ply:IsAdmin()) and Damagelog.RDM_Manager_Enabled == 1 then
+		if (IsValid(ply) and ply:CanUseRDMManager()) and Damagelog.RDM_Manager_Enabled == 1 then
 			Damagelog.rdmReporter:SendAdmin(ply);
 		end;
 	end)
@@ -263,7 +263,7 @@ end);
 
 --[[concommand.Add("DLRDM_Remove", function(ply, cmd, args, str)
 	if Damagelog.RDM_Manager_Enabled != 1 then return end 
-	if (IsValid(ply) and ply:IsAdmin()) then
+	if (IsValid(ply) and ply:CanUseRDMManager()) then
 		if (args[1]) then
 			local index = tonumber(args[1]);
 
@@ -273,7 +273,7 @@ end);
 				local plys = RecipientFilter();
 
 				for k, v in pairs(player.GetHumans()) do
-					if (v:IsAdmin()) then
+					if (v:CanUseRDMManager()) then
 						plys:AddPlayer(v);
 					end;
 				end;
@@ -288,7 +288,7 @@ end);]]--
 
 concommand.Add("DLRDM_State", function(ply, cmd, args, str)
 	if Damagelog.RDM_Manager_Enabled != 1 then return end 
-	if (IsValid(ply) and ply:IsAdmin()) then
+	if (IsValid(ply) and ply:CanUseRDMManager()) then
 		if (args[1] and args[2]) then
 			local index = tonumber(args[1]);
 			local state = tonumber(args[2]);
