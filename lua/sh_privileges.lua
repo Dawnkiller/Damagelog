@@ -25,3 +25,17 @@ function meta:CanUseDamagelog()
 	end
 	return checkSettings(self, 2)
 end
+
+if SERVER and ulx then
+	-- Needs to be called in Initialize hook, because damagelog addon is loaded before ULib, thus causing errors
+	hook.Add("Initialize", "DamagelogsAddULXAccessString", function()
+		ULib.ucl.registerAccess( "ulx seerdmmanager", ULib.ACCESS_ADMIN, "Ability to use RDM Manager", "Other" )
+	end)
+end
+
+function meta:CanUseRDMManager()
+	if ulx then
+		return self:query("ulx seerdmmanager")
+	end
+	return self:IsAdmin()
+end
