@@ -22,7 +22,7 @@ end;
 hook.Add("OnPlayerChat", "DLRDM_Command", function(ply, text, teamOnly, isDead)
 	text = text:lower();
 
-	if (text == "!report") then
+	if (text == Damagelog.RDM_Manager_Command) then
 		if (ply == LocalPlayer()) then
 			if (LocalPlayer():Alive() and GetRoundState() == ROUND_ACTIVE) then
 				chat.AddText(Color(255, 62, 62), "You can't report when you are alive!");
@@ -34,7 +34,7 @@ hook.Add("OnPlayerChat", "DLRDM_Command", function(ply, text, teamOnly, isDead)
 		return true;
 	end;
 
-	if (text == "!respond") then
+	if (text == Damagelog.RDM_Manager_Respond) then
 		if (ply == LocalPlayer()) then
 			RunConsoleCommand("DLRDM_SendRespond");
 		end;

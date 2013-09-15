@@ -218,7 +218,7 @@ end);
 hook.Add("PlayerSay", "DLRDM_Command", function(ply, text, teamOnly)
 	text = text:lower();
 
-	if (text == "!report") and Damagelog.RDM_Manager_Enabled then
+	if (text == Damagelog.RDM_Manager_Command) and Damagelog.RDM_Manager_Enabled then
 		local succes, fail = Damagelog.rdmReporter:CanReport(ply);
 		if (succes) then
 			Damagelog.rdmReporter:StartRepport(ply, true);
@@ -232,7 +232,7 @@ hook.Add("PlayerSay", "DLRDM_Command", function(ply, text, teamOnly)
 		return "";
 	end;
 
-	if (text == "!respond") and Damagelog.RDM_Manager_Enabled then
+	if (text == Damagelog.RDM_Manager_Respond) and Damagelog.RDM_Manager_Enabled then
 		Damagelog.rdmReporter:SendRespond(ply);
 
 		return "";
