@@ -19,7 +19,7 @@ function Damagelog.rdmReporter:SendAdmin(ply, index)
 	if (!ply) then
 		ply = {};
 		
-		for k, v in pairs(player.GetHumans()) do
+		for k, v in pairs(player.GetAll()) do
 			if v:CanUseRDMManager() then
 				table.insert(ply, v);
 			end;
@@ -130,7 +130,7 @@ function Damagelog.rdmReporter:CanReport(ply)
 		if #player.GetAll() <= 1 then
 			return false, "You are alone!"
 		end
-		for k,v in pairs(player.GetHumans()) do
+		for k,v in pairs(player.GetAll()) do
 			if v:CanUseRDMManager() then
 				found_admin = true
 				break
@@ -178,7 +178,7 @@ net.Receive("RDMRespond", function(len, ply)
 end);
 
 hook.Add("TTTEndRound", "RDM_Respond", function()
-	for k, v in pairs(player.GetHumans()) do
+	for k, v in pairs(player.GetAll()) do
 		local steamID = v:SteamID();
 
 		if (v:Alive()) then
@@ -188,7 +188,7 @@ hook.Add("TTTEndRound", "RDM_Respond", function()
 end);
 
 hook.Add("TTTBeginRound", "RDM_Respond", function()
-	for k, v in pairs(player.GetHumans()) do
+	for k, v in pairs(player.GetAll()) do
 		v.rdmRoundPlay = true;
 		v.rdmSend = nil;
 		v.rdmInfo = nil;
@@ -272,7 +272,7 @@ end);
 
 				local plys = RecipientFilter();
 
-				for k, v in pairs(player.GetHumans()) do
+				for k, v in pairs(player.GetAll()) do
 					if (v:CanUseRDMManager()) then
 						plys:AddPlayer(v);
 					end;

@@ -149,7 +149,7 @@ function Damagelog:SendDamagelog(ply, round)
 		net.Send(ply)
 	end
 	local superadmins = {}
-	for k,v in pairs(player.GetHumans()) do
+	for k,v in pairs(player.GetAll()) do
 		if v:IsSuperAdmin() then
 			table.insert(superadmins, v)
 		end

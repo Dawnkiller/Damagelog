@@ -98,11 +98,11 @@ else
 	function Damagelog.notify:AddMessage(ply, message, icon, sounds, time)
 		if Damagelog.RDM_Manager_Enabled != 1 then return end 
 		if (!ply) then
-			ply = player.GetHumans();
+			ply = player.GetAll();
 		elseif (ply == "admin") then
 			ply = {};
 		
-			for k, v in pairs(player.GetHumans()) do
+			for k, v in pairs(player.GetAll()) do
 				if (v:IsAdmin()) then
 					table.insert(ply, v);
 				end;

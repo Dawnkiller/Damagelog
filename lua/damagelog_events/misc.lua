@@ -92,7 +92,7 @@ function event:TTTC4Destroyed(ply, bomb)
 end
 
 function event:TTTBeginRound()
-	for k,v in pairs(player.GetHumans()) do
+	for k,v in pairs(player.GetAll()) do
 		if v.NoDisguise then 
 			v.NoDisguise = false
 		end
