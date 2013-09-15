@@ -45,7 +45,7 @@ will work with your admins carefully, so that it isn't abused, or used incorrect
 	local credits = vgui.Create("DLabel", panel)
 	credits:SetFont("DL_About_Text")
 	credits:SetText([[Tommynator (or tommy228) for coding the menu
-GuiGui for his big help on the RDM Manager
+GuiGui and Hobbes for their help
 vercas for vON]])
 	credits:SetTextColor(Color(0,0,0))
 	credits:SetPos(10, 195)
