@@ -150,7 +150,7 @@ function PANEL:AddActionMenuOpts(menuPanel, attacker, victim)
 			end
 		end):SetImage("icon16/lightning.png")
 	end
-	hook.Call("DamagelogsAddMenuActions", gmod.GetGamemode(), menuPanel)
+	hook.Call("DamagelogsAddMenuActions", gmod.GetGamemode(), menuPanel, attacker, victim)
 end;
 
 function PANEL:AddStateMenuOpts(menu, index)
