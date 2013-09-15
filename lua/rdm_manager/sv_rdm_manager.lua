@@ -127,7 +127,7 @@ end;
 function Damagelog.rdmReporter:CanReport(ply)
 	if (IsValid(ply)) then
 		local found_admin = false
-		if #player.GetHumans() <= 1 then
+		if #player.GetAll() <= 1 then
 			return false, "You are alone!"
 		end
 		for k,v in pairs(player.GetHumans()) do

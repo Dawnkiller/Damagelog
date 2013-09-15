@@ -1,6 +1,6 @@
 local PANEL = {};
 
-local state = {
+local report_states = {
 	"Waiting",
 	"In progress",
 	"Finished"
@@ -25,68 +25,39 @@ function PANEL:Init()
 		Damagelog.rdmReporter.histPanel = line.index;
 		self:Update();
 	end;
+	self.reportList.OnRowRightClick = function()
+		local report = Damagelog.rdmReporter:GetSelectedReport();
+		local menu = DermaMenu();
+
+		local actions = menu:AddSubMenu("Take Action");
+		self:AddActionMenuOpts(actions, report.attacker, report.ply);
+		actions:SetImage("icon16/wand.png");
+
+		local states = menu:AddSubMenu("Set State");
+		self:AddStateMenuOpts(states, report.index);
+		states:SetImage("icon16/report.png");
+
+		menu:Open();
+	end;
 				
 	self.removeReport = vgui.Create("DButton", self.ManagerSelection);
-	self.removeReport:SetText("Take action");
+	self.removeReport:SetText("Take Action");
 	self.removeReport:SetDisabled(true);
 	self.removeReport.DoClick = function()
 		local report = Damagelog.rdmReporter:GetSelectedReport();
-		local menuPanel = DermaMenu()
-		menuPanel:AddOption("Force the reported player to respond", function()
-			if IsValid(report.attacker) then
-				RunConsoleCommand("DLRDM_ForceVictim", tostring(report.attacker:EntIndex()))
-			else
-				Derma_Message("The reported player isn't valid! (disconnected?)", "Error", "OK")
-			end
-		end):SetImage("icon16/clock_red.png")
-		if ulx then
-			if ulx.slaynr then
-				local slaynr_pnl = vgui.Create("DMenuOption", menuPanel)
-				local slaynr = DermaMenu(menuPanel)
-				slaynr:SetVisible(false)
-				slaynr_pnl:SetSubMenu(slaynr)
-				slaynr_pnl:SetText("Slay next round")
-				slaynr_pnl:SetImage("icon16/lightning_go.png")
-				menuPanel:AddPanel(slaynr_pnl)
-				slaynr:AddOption("Victim", function()
-					if IsValid(report.ply) then
-						RunConsoleCommand("ulx", "slaynr", report.ply:Nick())
-					else
-						Derma_Message("The victim isn't valid! (disconnected?)", "Error", "OK")
-					end
-				end):SetImage("icon16/user.png")
-				slaynr:AddOption("Reported player", function()
-					if IsValid(report.attacker) then
-						RunConsoleCommand("ulx", "slaynr", report.attacker:Nick())
-					else
-						Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
-					end
-				end):SetImage("icon16/user_delete.png")
-			end
-			menuPanel:AddOption("Slay the reported player", function()
-				if IsValid(report.attacker) then
-					RunConsoleCommand("ulx", "slay", report.attacker:Nick())
-				else
-					Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
-				end
-			end):SetImage("icon16/lightning.png")
-		end
-		hook.Call("DamagelogsAddMenuActions", gmod.GetGamemode(), menuPanel)
-		menuPanel:Open()
+		local menu = DermaMenu();
+		self:AddActionMenuOpts(menu, report.attacker, report.ply);
+		menu:Open();
 	end
 	
 	self.setState = vgui.Create("DButton", self.ManagerSelection);
-	self.setState:SetText("Set state..");
+	self.setState:SetText("Set State");
 	self.setState:SetDisabled(true);
 	self.setState.DoClick = function()
 		local menuPanel = DermaMenu();
 		local report = Damagelog.rdmReporter:GetSelectedReport();
 
-		for k, v in pairs(state) do
-			menuPanel:AddOption(v, function()
-				RunConsoleCommand("DLRDM_State", tostring(report.index), tostring(k));
-			end);
-		end;
+		self:AddStateMenuOpts(menuPanel, report.index)
 
 		menuPanel:Open();
 	end;
@@ -97,16 +68,18 @@ function PANEL:Init()
 	self.VictimInfos:SetHeight(160);
 
 	self.VictimInfos.Paint = function(panel, w, h)
-		surface.SetDrawColor(Color(0,0,0));
-		surface.DrawOutlinedRect(1, 1, w-2, h-2);
-		surface.DrawLine(w/2, 1, w/2, h);
-		surface.DrawLine(1, 27, w-1, 27);
-		surface.SetDrawColor(Color(0, 200, 0));
-		surface.DrawRect(2, 2, (w/2)-3, 25);
-		surface.SetDrawColor(Color(200, 0, 0));
-		surface.DrawRect((w/2)+1, 2, (w/2)-2, 25);
-		draw.SimpleText("Victim's message", "DL_RDM_Manager", 90, 5, Color(0,0,0), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT);
-		draw.SimpleText("Reported player's message", "DL_RDM_Manager", 375, 5, Color(0,0,0), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT);
+		surface.SetDrawColor(0, 200, 0);
+		surface.DrawRect(0, 0, (w/2), 27);
+		draw.SimpleText("Victim's message", "DL_RDM_Manager", w/4, 5, Color(0,0,0), TEXT_ALIGN_CENTER);
+
+		surface.SetDrawColor(200, 0, 0);
+		surface.DrawRect((w/2)+1, 0, (w/2), 27);
+		draw.SimpleText("Reported player's message", "DL_RDM_Manager", (w/2) + 1 + (w/4), 5, Color(0,0,0), TEXT_ALIGN_CENTER);
+
+		surface.SetDrawColor(0, 0, 0);
+		surface.DrawOutlinedRect(0, 0, w, h);
+		surface.DrawLine(w/2, 0, w/2, h);
+		surface.DrawLine(0, 27, w, 27);
 	end;
 		
 	self.victim_message = vgui.Create("DTextEntry", self.VictimInfos);
@@ -132,6 +105,57 @@ function PANEL:Init()
 	self:AddItem(self.VictimLogs);
 
 	self:Update();
+end;
+
+function PANEL:AddActionMenuOpts(menuPanel, attacker, victim)
+	menuPanel:AddOption("Force the reported player to respond", function()
+		if IsValid(attacker) then
+			RunConsoleCommand("DLRDM_ForceVictim", tostring(attacker:EntIndex()))
+		else
+			Derma_Message("The reported player isn't valid! (disconnected?)", "Error", "OK")
+		end
+	end):SetImage("icon16/clock_red.png")
+	if ulx then
+		if ulx.slaynr then
+			local slaynr_pnl = vgui.Create("DMenuOption", menuPanel)
+			local slaynr = DermaMenu(menuPanel)
+			slaynr:SetVisible(false)
+			slaynr_pnl:SetSubMenu(slaynr)
+			slaynr_pnl:SetText("Slay next round")
+			slaynr_pnl:SetImage("icon16/lightning_go.png")
+			menuPanel:AddPanel(slaynr_pnl)
+			slaynr:AddOption("Victim", function()
+				if IsValid(victim) then
+					RunConsoleCommand("ulx", "slaynr", victim:Nick())
+				else
+					Derma_Message("The victim isn't valid! (disconnected?)", "Error", "OK")
+				end
+			end):SetImage("icon16/user.png")
+			slaynr:AddOption("Reported player", function()
+				if IsValid(attacker) then
+					RunConsoleCommand("ulx", "slaynr", attacker:Nick())
+				else
+					Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
+				end
+			end):SetImage("icon16/user_delete.png")
+		end
+		menuPanel:AddOption("Slay the reported player", function()
+			if IsValid(attacker) then
+				RunConsoleCommand("ulx", "slay", attacker:Nick())
+			else
+				Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
+			end
+		end):SetImage("icon16/lightning.png")
+	end
+	hook.Call("DamagelogsAddMenuActions", gmod.GetGamemode(), menuPanel)
+end;
+
+function PANEL:AddStateMenuOpts(menu, index)
+	for k, v in pairs(report_states) do
+		menu:AddOption(v, function()
+			RunConsoleCommand("DLRDM_State", tostring(index), tostring(k));
+		end);
+	end;
 end;
 
 function PANEL:Update()
