@@ -96,7 +96,7 @@ else
 	util.AddNetworkString("DLRDM_Notify");
 
 	function Damagelog.notify:AddMessage(ply, message, icon, sounds, time)
-		if Damagelog.RDM_Manager_Enabled != 1 then return end 
+		if not Damagelog.RDM_Manager_Enabled then return end 
 		if (!ply) then
 			ply = player.GetAll();
 		elseif (ply == "admin") then

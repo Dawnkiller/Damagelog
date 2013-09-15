@@ -44,8 +44,7 @@ end;
 function Damagelog.rdmReporter:SendRespond(ply)
 	local steamID = ply:SteamID();
 
-	if (Damagelog.rdmReporter.respond[steamID]
-	and table.Count(Damagelog.rdmReporter.respond[steamID]) > 0) then
+	if (Damagelog.rdmReporter.respond[steamID] and table.Count(Damagelog.rdmReporter.respond[steamID]) > 0) then
 		net.Start("RDMRespond");
 			net.WriteTable(Damagelog.rdmReporter.respond[steamID]);
 		net.Send(ply);
@@ -53,7 +52,7 @@ function Damagelog.rdmReporter:SendRespond(ply)
 end;
 
 function Damagelog.rdmReporter:AddReport(ply, message, killer)
-	if Damagelog.RDM_Manager_Enabled != 1 then return end
+	if not Damagelog.RDM_Manager_Enabled then return end
 	if (IsValid(ply) and ply.rdmInfo) then
 		local repport = {
 			time = ply.rdmInfo.time,
@@ -204,13 +203,14 @@ concommand.Add("DLRDM_ForceVictim", function(ply, cmd, args)
 end)
 
 hook.Add("PlayerDeath", "RDM_Killer", function(victim, infl, attacker)
-	if (Damagelog.RDM_Manager_Window == 1) then
+	if Damagelog.RDM_Manager_Enabled then
+		-- Send this anyway, client can discard the packet if they have the RDM Manager window thing disabled.
 		victim.rdmSend = true;
 		victim.rdmInfo = {
 			time = Damagelog.Time,
 			round = Damagelog.CurrentRound,
 		};
-	end;
+	end
 
 	Damagelog.rdmReporter:SendRespond(victim);
 end);
@@ -218,7 +218,7 @@ end);
 hook.Add("PlayerSay", "DLRDM_Command", function(ply, text, teamOnly)
 	text = text:lower();
 
-	if (text == "!report") and Damagelog.RDM_Manager_Enabled == 1 then
+	if (text == "!report") and Damagelog.RDM_Manager_Enabled then
 		local succes, fail = Damagelog.rdmReporter:CanReport(ply);
 		if (succes) then
 			Damagelog.rdmReporter:StartRepport(ply, true);
@@ -232,7 +232,7 @@ hook.Add("PlayerSay", "DLRDM_Command", function(ply, text, teamOnly)
 		return "";
 	end;
 
-	if (text == "!respond") and Damagelog.RDM_Manager_Enabled == 1  then
+	if (text == "!respond") and Damagelog.RDM_Manager_Enabled then
 		Damagelog.rdmReporter:SendRespond(ply);
 
 		return "";
@@ -241,14 +241,14 @@ end);
 
 hook.Add("PlayerInitialSpawn", "RDM_SendAdmin", function(plt)
 	timer.Simple(4, function()
-		if (IsValid(ply) and ply:CanUseRDMManager()) and Damagelog.RDM_Manager_Enabled == 1 then
+		if (IsValid(ply) and ply:CanUseRDMManager()) and Damagelog.RDM_Manager_Enabled then
 			Damagelog.rdmReporter:SendAdmin(ply);
 		end;
 	end)
 end);
 
 concommand.Add("DLRDM_Repport", function(ply)
-	if Damagelog.RDM_Manager_Enabled != 1 then return end
+	if not Damagelog.RDM_Manager_Enabled then return end
 	if (IsValid(ply)) then
 		if (!ply:Alive()) then
 			if (ply.rdmSend) then
@@ -262,7 +262,7 @@ concommand.Add("DLRDM_Repport", function(ply)
 end);
 
 --[[concommand.Add("DLRDM_Remove", function(ply, cmd, args, str)
-	if Damagelog.RDM_Manager_Enabled != 1 then return end 
+	if not Damagelog.RDM_Manager_Enabled then return end 
 	if (IsValid(ply) and ply:CanUseRDMManager()) then
 		if (args[1]) then
 			local index = tonumber(args[1]);
@@ -287,7 +287,7 @@ end);
 end);]]--
 
 concommand.Add("DLRDM_State", function(ply, cmd, args, str)
-	if Damagelog.RDM_Manager_Enabled != 1 then return end 
+	if not Damagelog.RDM_Manager_Enabled then return end 
 	if (IsValid(ply) and ply:CanUseRDMManager()) then
 		if (args[1] and args[2]) then
 			local index = tonumber(args[1]);

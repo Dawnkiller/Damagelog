@@ -16,6 +16,7 @@ AddCSLuaFile("not_my_code/orderedPairs.lua")
 AddCSLuaFile("not_my_code/von.lua")
 AddCSLuaFile("rdm_manager/cl_rdm_manager.lua")
 AddCSLuaFile("config/config.lua")
+AddCSLuaFile("cl_ttt_settings.lua")
 
 include("config/config.lua")
 include("sh_sync_entity.lua")

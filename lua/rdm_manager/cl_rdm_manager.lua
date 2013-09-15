@@ -63,6 +63,8 @@ net.Receive("RDMRespond", function(len, ply)
 	local liste = net.ReadTable();
 	local count = table.Count(liste);
 
+	-- if not cvars.Bool("ttt_dmglogs_rdmpopups") then return end
+
 	Damagelog.rdmReporter.respond = liste;
 	Damagelog.notify:AddMessage("You have "..count.." awaiting reports!");
 

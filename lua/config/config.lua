@@ -20,14 +20,9 @@ Damagelog:AddUser("guest", 2)
 
 Damagelog.AbuseMessageMode = 1
 
--- 1 to enable the RDM Manager, 0 to disable it
+-- true to enable the RDM Manager, false to disable it
 
-Damagelog.RDM_Manager_Enabled = 1
-
--- Open a small window when you get teamkilled asking you if you want to report the killer or not?
--- 1 for yes, 0 for no
-
-Damagelog.RDM_Manager_Window = 1
+Damagelog.RDM_Manager_Enabled = true
 
 -- Commands to open the report and response menu. Never forget the quotation marks or the whole menu will break
 
