@@ -26,7 +26,7 @@ function Damagelog:AddEvent(event, f)
 		end
 	
 		local recip = {}
-		for k,v in pairs(player.GetHumans()) do
+		for k,v in pairs(player.GetAll()) do
 			if v:CanUseDamagelog() then
 				table.insert(recip, v)
 			end

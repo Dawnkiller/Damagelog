@@ -15,6 +15,7 @@ include("sh_weapontable.lua")
 include("not_my_code/orderedPairs.lua")
 include("not_my_code/von.lua")
 include("rdm_manager/cl_rdm_manager.lua")
+include("cl_ttt_settings.lua")
 
 function Damagelog:OpenMenu()
 	local x,y = 665, 680
@@ -86,9 +87,7 @@ end)
 
 net.Receive("DL_Ded", function()
 	
-	if Damagelog.RDM_Manager_Window != 1 then return end
-	
-	if net.ReadUInt(1,1) == 1 then
+	if cvars.Bool("ttt_dmglogs_rdmpopups") and net.ReadUInt(1,1) == 1 then
 	
 		local death_reason = net.ReadString()
 	

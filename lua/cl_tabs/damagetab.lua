@@ -147,7 +147,7 @@ function Damagelog:DrawDamageTab(x, y)
 								ava:SetPos(4, 4)
 								pnl:AddItem(ply) 
 							end
-							for k,v in pairs(player.GetHumans()) do
+							for k,v in pairs(player.GetAll()) do
 								plist:AddPlayer(v)
 							end
 							button.DoClick = function()
