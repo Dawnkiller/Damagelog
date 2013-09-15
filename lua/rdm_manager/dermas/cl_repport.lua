@@ -45,14 +45,14 @@ function PANEL:Init()
 		currentSelection = killer;
 	end
 	
-	for k,v in pairs(player.GetHumans()) do
+	for k,v in pairs(player.GetAll()) do
 		if v == LocalPlayer() or v == killer then continue end;
 		local line = self.playerSelection:AddChoice(v:Nick());
 		id_ents[line] = v;
 	end;
-	if not selected and #player.GetHumans() > 0 then
+	if not selected and #player.GetAll() > 0 then
 		self.playerSelection:ChooseOptionID(1);
-		currentSelection = player.GetHumans()[1] != LocalPlayer() and player.GetHumans()[1] or player.GetHumans()[2];
+		currentSelection = player.GetAll()[1] != LocalPlayer() and player.GetAll()[1] or player.GetAll()[2];
 	end;
 		
 	local counterChar = vgui.Create("DLabel", self.reportList);

@@ -29,13 +29,13 @@ function PANEL:Init()
 		local report = Damagelog.rdmReporter:GetSelectedReport();
 		local menu = DermaMenu();
 
-		local actions = menu:AddSubMenu("Take Action");
+		local actions, smpnl = menu:AddSubMenu("Take Action");
 		self:AddActionMenuOpts(actions, report.attacker, report.ply);
-		actions:SetImage("icon16/wand.png");
+		smpnl:SetIcon("icon16/wand.png");
 
-		local states = menu:AddSubMenu("Set State");
+		local states, smpnl = menu:AddSubMenu("Set State");
 		self:AddStateMenuOpts(states, report.index);
-		states:SetImage("icon16/report.png");
+		smpnl:SetIcon("icon16/report.png");
 
 		menu:Open();
 	end;
@@ -68,18 +68,21 @@ function PANEL:Init()
 	self.VictimInfos:SetHeight(160);
 
 	self.VictimInfos.Paint = function(panel, w, h)
-		surface.SetDrawColor(0, 200, 0);
-		surface.DrawRect(0, 0, (w/2), 27);
-		draw.SimpleText("Victim's message", "DL_RDM_Manager", w/4, 5, Color(0,0,0), TEXT_ALIGN_CENTER);
 
-		surface.SetDrawColor(200, 0, 0);
-		surface.DrawRect((w/2)+1, 0, (w/2), 27);
-		draw.SimpleText("Reported player's message", "DL_RDM_Manager", (w/2) + 1 + (w/4), 5, Color(0,0,0), TEXT_ALIGN_CENTER);
+		local bar_height = 27
+
+		surface.SetDrawColor(30, 200, 30);
+		surface.DrawRect(0, 0, (w/2), bar_height);
+		draw.SimpleText("Victim's message", "DL_RDM_Manager", w/4, bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
+
+		surface.SetDrawColor(220, 30, 30);
+		surface.DrawRect((w/2)+1, 0, (w/2), bar_height);
+		draw.SimpleText("Reported player's message", "DL_RDM_Manager", (w/2) + 1 + (w/4), bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
 
 		surface.SetDrawColor(0, 0, 0);
 		surface.DrawOutlinedRect(0, 0, w, h);
 		surface.DrawLine(w/2, 0, w/2, h);
-		surface.DrawLine(0, 27, w, 27);
+		surface.DrawLine(0, 27, w, bar_height);
 	end;
 		
 	self.victim_message = vgui.Create("DTextEntry", self.VictimInfos);
@@ -171,7 +174,7 @@ function PANEL:Update()
 			v.round = v.round or 0;
 			local time = util.SimpleTime(math.max(0, v.time), "%02i:%02i");
 
-			local statename = state[v.state] or v.state
+			local statename = report_states[v.state] or v.state
 			if IsValid(v.state_ply) then
 				statename = statename.." by "..v.state_ply:Nick()
 			end
