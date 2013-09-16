@@ -1,4 +1,3 @@
-
 -- edit the privileges on config/config.lua
 
 local function checkSettings(self, value)
@@ -34,8 +33,5 @@ if SERVER and ulx then
 end
 
 function meta:CanUseRDMManager()
-	if ulx then
-		return self:query("ulx seerdmmanager")
-	end
 	return self:IsAdmin()
 end
