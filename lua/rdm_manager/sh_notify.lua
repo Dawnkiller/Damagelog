@@ -103,7 +103,7 @@ else
 			ply = {};
 		
 			for k, v in pairs(player.GetAll()) do
-				if (v:IsAdmin()) then
+				if (v:CanUseRDMManager()) then
 					table.insert(ply, v);
 				end;
 			end;
