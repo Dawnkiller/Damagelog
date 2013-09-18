@@ -273,7 +273,9 @@ function Damagelog:DrawDamageTab(x, y)
 				self.Round:AddChoice("Round "..tostring(i), i)
 			end
 		end
-		if PlayedRounds then
+		if PlayedRounds <= 10 then
+			self.Round:ChooseOptionID(PlayedRounds)
+		else
 			self.Round:ChooseOptionID(11)
 		end
 		self.SelectedRound = PlayedRounds
