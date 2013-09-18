@@ -302,7 +302,7 @@ concommand.Add("DLRDM_State", function(ply, cmd, args, str)
 					report.state_ply = NULL
 				end
 
-				Damagelog.rdmReporter:SendAdmin(ply, index);
+				Damagelog.rdmReporter:SendAdmin(nil, index);
 				Damagelog.notify:AddMessage(ply, "A report has been updated!", "icon16/information.png");
 			end;
 		end;
