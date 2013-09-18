@@ -1,4 +1,3 @@
-
 local function AAText(text, font, x, y, color, align)
     draw.SimpleText(text, font, x+1, y+1, Color(0,0,0,math.min(color.a,120)), align)
     draw.SimpleText(text, font, x+2, y+2, Color(0,0,0,math.min(color.a,50)), align)
@@ -275,7 +274,7 @@ function Damagelog:DrawDamageTab(x, y)
 			end
 		end
 		if PlayedRounds then
-			self.Round:ChooseOptionID(PlayedRounds)
+			self.Round:ChooseOptionID(11)
 		end
 		self.SelectedRound = PlayedRounds
 		askLogs()
