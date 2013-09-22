@@ -1,5 +1,4 @@
 
-
 if SERVER then
 	Damagelog:EventHook("DoPlayerDeath")
 else
@@ -12,7 +11,7 @@ local event = {}
 event.Type = "KILL"
 
 function event:DoPlayerDeath(ply, attacker, dmginfo)
-	if (IsValid(attacker) and attacker:IsPlayer() and attacker == ply) or not IsValid(attacker) then
+	if (IsValid(attacker) and (attacker:IsPlayer() and attacker == ply) or not attacker:IsPlayer()) or not IsValid(attacker) then
 		local tbl = { 
 			[1] = ply:Nick(), 
 			[2] = ply:GetRole(), 
