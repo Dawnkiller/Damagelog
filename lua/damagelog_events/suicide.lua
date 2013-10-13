@@ -1,4 +1,3 @@
-
 if SERVER then
 	Damagelog:EventHook("DoPlayerDeath")
 else
@@ -18,14 +17,16 @@ function event:DoPlayerDeath(ply, attacker, dmginfo)
 			[3] = ply:SteamID()
 		} 
 		self.CallEvent(tbl)
-		net.Start("DL_Ded")
-		net.WriteUInt(0,1)
-		net.Send(ply)
-		ply.rdmInfo = {
-			time = Damagelog.Time,
-			round = Damagelog.CurrentRound,
-		}
-		ply.rdmSend = true
+		if Damagelog.RDM_Manager_Enabled then
+			net.Start("DL_Ded")
+			net.WriteUInt(0,1)
+			net.Send(ply)
+			ply.rdmInfo = {
+				time = Damagelog.Time,
+				round = Damagelog.CurrentRound,
+			}
+			ply.rdmSend = true
+		end
 	end
 end
 
