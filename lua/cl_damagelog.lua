@@ -87,7 +87,7 @@ end)
 
 net.Receive("DL_Ded", function()
 	
-	if cvars.Bool("ttt_dmglogs_rdmpopups") and net.ReadUInt(1,1) == 1 then
+	if Damagelog.RDM_Manager_Enabled and cvars.Bool("ttt_dmglogs_rdmpopups") and net.ReadUInt(1,1) == 1 then
 	
 		local death_reason = net.ReadString()
 	
