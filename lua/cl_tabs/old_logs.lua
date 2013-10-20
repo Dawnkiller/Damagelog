@@ -1,4 +1,3 @@
-
 local monthnames = {
 	"January",
 	"February",
@@ -47,7 +46,7 @@ function Damagelog:DrawOldLogs()
 							f = string.find(map, "_", f+1)
 						end
 						local mapname = string.Left(map, #map-(#map-last_f)-1)
-						local text = map_infos.date.." ("..mapname..")"
+						local text = (map_infos.date or "Unknown date").." ("..mapname..")"
 						local map_node = day_node:AddNode(text)
 						map_node.year = day_node.year
 						map_node.month = day_node.month
