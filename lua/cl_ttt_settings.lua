@@ -18,11 +18,11 @@ hook.Add("TTTSettingsTabs", "DamagelogsTTTSettingsTab", function(dtabs)
 
 		local cb = nil
 
-		dgui:CheckBox("Enable RDM Manager popups on RDM", "ttt_dmglogs_rdmpopups")
+		dgui:CheckBox("Enable RDM Manager popups upon RDM", "ttt_dmglogs_rdmpopups")
 
 		dsettings:AddItem(dgui)
 
 	end
 
-	dtabs:AddSheet("Damagelogs", dsettings, "icon16/table_gear.png", false, false, "Damagelog menu related settings")
+	dtabs:AddSheet("Damagelogs", dsettings, "icon16/table_gear.png", false, false, "Damagelog menu settings")
 end)

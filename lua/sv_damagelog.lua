@@ -100,7 +100,7 @@ function Damagelog:WeaponFromDmg(dmg)
 		elseif dmg:IsDamageType(DMG_DIRECT) or dmg:IsDamageType(DMG_BURN) then
 			wep = "fire"
 		elseif dmg:IsDamageType(DMG_CRUSH) then
-			wep = "falling or prop-killing"
+			wep = "falling or prop damage"
 		elseif inf:IsPlayer() then
 			wep = inf:GetActiveWeapon()
 			if not IsValid(wep) then

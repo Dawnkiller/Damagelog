@@ -21,7 +21,7 @@ function Damagelog:OpenMenu()
 	local x,y = 665, 680
 	self.Menu = vgui.Create("DFrame")
 	self.Menu:SetSize(x, y)
-	self.Menu:SetTitle("Damagelog menu") -- do me a favor. don't put your community's name here
+	self.Menu:SetTitle("Tommynator's Damagelog Menu") -- do me a favor. don't put your community's name here
 	self.Menu:SetDraggable(false)
 	self.Menu:MakePopup()
 	self.Menu:Center()	
@@ -119,7 +119,7 @@ net.Receive("DL_Ded", function()
 		local close = vgui.Create("DButton", frame)
 		close:SetPos(5, 85)
 		close:SetSize(240, 25)	
-		close:SetText("He didn't random kill me")
+		close:SetText("This was not RDM.")
 		close.DoClick = function()
 			frame:Close()
 		end

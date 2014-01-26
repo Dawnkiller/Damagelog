@@ -16,11 +16,11 @@ function PANEL:Init()
 	self.ManagerSelection:SetColor(Color(90, 90, 95));
 	
 	self.reportList = vgui.Create("DListView", self.ManagerSelection);
-	self.reportList:AddColumn("Victim's name"):SetFixedWidth(137);
-	self.reportList:AddColumn("Reported player's name"):SetFixedWidth(137);
+	self.reportList:AddColumn("Victim"):SetFixedWidth(137);
+	self.reportList:AddColumn("Reported player"):SetFixedWidth(137);
 	self.reportList:AddColumn("Round"):SetFixedWidth(54);
 	self.reportList:AddColumn("Time"):SetFixedWidth(72);
-	self.reportList:AddColumn("State"):SetFixedWidth(100);
+	self.reportList:AddColumn("Status"):SetFixedWidth(100);
 	self.reportList.OnRowSelected = function (panel, lineID, line)
 		Damagelog.rdmReporter.histPanel = line.index;
 		self:Update();
@@ -33,7 +33,7 @@ function PANEL:Init()
 		self:AddActionMenuOpts(actions, report.attacker, report.ply);
 		smpnl:SetIcon("icon16/wand.png");
 
-		local states, smpnl = menu:AddSubMenu("Set State");
+		local states, smpnl = menu:AddSubMenu("Set Status");
 		self:AddStateMenuOpts(states, report.index);
 		smpnl:SetIcon("icon16/report.png");
 
@@ -51,7 +51,7 @@ function PANEL:Init()
 	end
 	
 	self.setState = vgui.Create("DButton", self.ManagerSelection);
-	self.setState:SetText("Set State");
+	self.setState:SetText("Set Status");
 	self.setState:SetDisabled(true);
 	self.setState.DoClick = function()
 		local menuPanel = DermaMenu();
@@ -73,11 +73,11 @@ function PANEL:Init()
 
 		surface.SetDrawColor(30, 200, 30);
 		surface.DrawRect(0, 0, (w/2), bar_height);
-		draw.SimpleText("Victim's message", "DL_RDM_Manager", w/4, bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
+		draw.SimpleText("Victim's report", "DL_RDM_Manager", w/4, bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
 
 		surface.SetDrawColor(220, 30, 30);
 		surface.DrawRect((w/2)+1, 0, (w/2), bar_height);
-		draw.SimpleText("Reported player's message", "DL_RDM_Manager", (w/2) + 1 + (w/4), bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
+		draw.SimpleText("Reported player's response", "DL_RDM_Manager", (w/2) + 1 + (w/4), bar_height/2, Color(0,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
 
 		surface.SetDrawColor(0, 0, 0);
 		surface.DrawOutlinedRect(0, 0, w, h);
@@ -138,7 +138,7 @@ function PANEL:AddActionMenuOpts(menuPanel, attacker, victim)
 				if IsValid(attacker) then
 					RunConsoleCommand("ulx", "slaynr", attacker:Nick())
 				else
-					Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
+					Derma_Message("The reported player isn't valid! (disconnected?)", "Error", "OK")
 				end
 			end):SetImage("icon16/user_delete.png")
 		end
@@ -146,7 +146,7 @@ function PANEL:AddActionMenuOpts(menuPanel, attacker, victim)
 			if IsValid(attacker) then
 				RunConsoleCommand("ulx", "slay", attacker:Nick())
 			else
-				Derma_Message("The reported isn't valid! (disconnected?)", "Error", "OK")
+				Derma_Message("The reported player isn't valid! (disconnected?)", "Error", "OK")
 			end
 		end):SetImage("icon16/lightning.png")
 	end

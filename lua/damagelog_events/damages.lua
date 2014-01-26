@@ -2,9 +2,9 @@
 if SERVER then
 	Damagelog:EventHook("EntityTakeDamage")
 else
-	Damagelog:AddFilter("Show damages", DAMAGELOG_FILTER_BOOL, true)
-	Damagelog:AddColor("Team_Damages", Color(255, 40, 40))
-	Damagelog:AddColor("Damages", Color(0, 0, 0))
+	Damagelog:AddFilter("Show damage", DAMAGELOG_FILTER_BOOL, true)
+	Damagelog:AddColor("Team Damage", Color(255, 40, 40))
+	Damagelog:AddColor("Damage", Color(0, 0, 0))
 end
 
 local event = {}
@@ -73,9 +73,9 @@ function event:ToString(tbl)
 	local weapon = Damagelog.weapon_table[tbl[6]] or tbl[6]
 	local str
 	if weapon then
-		str = string.format("%s [%s] has damaged %s [%s] for %s damages with %s", tbl[3], Damagelog:StrRole(tbl[4]), tbl[1], Damagelog:StrRole(tbl[2]), tbl[5], weapon) 
+		str = string.format("%s [%s] has damaged %s [%s] for %s HP with %s.", tbl[3], Damagelog:StrRole(tbl[4]), tbl[1], Damagelog:StrRole(tbl[2]), tbl[5], weapon) 
 	else
-		str = string.format("%s [%s] has damaged %s [%s] for %s damages (unknown weapon)", tbl[3], Damagelog:StrRole(tbl[4]), tbl[1], Damagelog:StrRole(tbl[2]), tbl[5]) 
+		str = string.format("%s [%s] has damaged %s [%s] for %s HP with an unknown weapon.", tbl[3], Damagelog:StrRole(tbl[4]), tbl[1], Damagelog:StrRole(tbl[2]), tbl[5]) 
 	end
 	return str
 	
@@ -89,7 +89,7 @@ function event:IsAllowed(tbl)
 			return false
 		end
 	end
-	local dfilter = Damagelog.filter_settings["Show damages"]
+	local dfilter = Damagelog.filter_settings["Show damage"]
 	if not dfilter then return false end
 	return true
 	
@@ -98,9 +98,9 @@ end
 function event:GetColor(tbl)
 	
 	if Damagelog:IsTeamkill(tbl[2], tbl[4]) then
-		return Damagelog:GetColor("Team_Damages")
+		return Damagelog:GetColor("Team Damage")
 	else
-		return Damagelog:GetColor("Damages")
+		return Damagelog:GetColor("Damage")
 	end
 	
 end

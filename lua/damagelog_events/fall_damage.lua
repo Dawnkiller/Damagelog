@@ -2,9 +2,9 @@
 if SERVER then
 	Damagelog:EventHook("EntityTakeDamage")
 else
-	Damagelog:AddFilter("Show fall damages", DAMAGELOG_FILTER_BOOL, false)
-	Damagelog:AddColor("Team_Damages", Color(255, 40, 40))
-	Damagelog:AddColor("Fall Damages", Color(0, 0, 0))
+	Damagelog:AddFilter("Show fall damage", DAMAGELOG_FILTER_BOOL, false)
+	Damagelog:AddColor("Team Damage", Color(255, 40, 40))
+	Damagelog:AddColor("Fall Damage", Color(0, 0, 0))
 end
 
 local event = {}
@@ -72,7 +72,7 @@ function event:IsAllowed(tbl)
 			return false
 		end
 	end
-	local dfilter = Damagelog.filter_settings["Show fall damages"]
+	local dfilter = Damagelog.filter_settings["Show fall damage"]
 	if not dfilter then return false end
 	return true
 	
@@ -80,9 +80,9 @@ end
 
 function event:GetColor(tbl)
 	if tbl[5] and Damagelog:IsTeamkill(tbl[2], tbl[7]) then
-		return Damagelog:GetColor("Team_Damages")
+		return Damagelog:GetColor("Team Damage")
 	else
-		return Damagelog:GetColor("Fall Damages")
+		return Damagelog:GetColor("Fall Damage")
 	end
 end
 

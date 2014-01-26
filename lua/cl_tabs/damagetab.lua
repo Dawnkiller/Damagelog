@@ -11,7 +11,7 @@ function Damagelog:DrawDamageTab(x, y)
 	local function askLogs()
 		if not self.SelectedRound then return end
 		self.Damagelog:Clear()
-		self.Damagelog:AddLine("", "", "Loading..")
+		self.Damagelog:AddLine("", "", "Loading...")
 		self.loading = {}
 		self.receiving = true
 		net.Start("DL_AskDamagelog")
@@ -30,7 +30,7 @@ function Damagelog:DrawDamageTab(x, y)
 	local forms = {}
 		
 	self.RF = vgui.Create("DForm", self.PanelOptions)
-	self.RF:SetName("Round selection and filters")
+	self.RF:SetName("Round selection/filters")
 	self.Round = vgui.Create("DComboBox")
 	local old_click = self.Round.DoClick
 	self.Round.DoClick = function(panel)
@@ -73,7 +73,7 @@ function Damagelog:DrawDamageTab(x, y)
 							updateFilters(true)
 						end)
 					elseif v == DAMAGELOG_FILTER_PLAYER then
-						menu:AddOption("Set Player", function()
+						menu:AddOption("Select a player", function()
 							self.DamageTab:SetDisabled(true)
 							local selection = vgui.Create("DFrame")
 							selection:SetTitle("Select player")
@@ -91,7 +91,7 @@ function Damagelog:DrawDamageTab(x, y)
 								end
 							end)
 							local button = vgui.Create("DButton", selection)
-							button:SetText("Set the selected player to the filter")
+							button:SetText("Filter selected player")
 							button:SetSize(255, 25)
 							button:SetPos(0, 28)
 							button:CenterHorizontal()
@@ -182,10 +182,10 @@ function Damagelog:DrawDamageTab(x, y)
 	table.insert(forms, self.RF)
 		
 	self.DamageInfoBox = vgui.Create("DForm", self.PanelOptions)
-	self.DamageInfoBox:SetName("Damage informations section")
+	self.DamageInfoBox:SetName("Damage information")
 	self.DamageInfo = vgui.Create("DListView")
 	self.DamageInfo:SetHeight(130)
-	self.DamageInfo:AddColumn("Damage informations").DoClick = function() end
+	self.DamageInfo:AddColumn("Damage information").DoClick = function() end
 	self.DamageInfoBox:AddItem(self.DamageInfo)
 	self.PanelOptions:AddItem(self.DamageInfoBox)
 	self.DamageInfoBox:SetHeight(350)
@@ -194,11 +194,11 @@ function Damagelog:DrawDamageTab(x, y)
 	table.insert(forms, self.DamageInfoBox)
 			
 	self.RoleInfos = vgui.Create("DForm", self.PanelOptions)
-	self.RoleInfos:SetName("List of roles")
+	self.RoleInfos:SetName("Roles")
 	self.Roles = vgui.Create("DListView")
 	self.Roles:AddColumn("Player")
 	self.Roles:AddColumn("Role")
-	self.Roles:AddColumn("Alive")
+	self.Roles:AddColumn("Alive?")
 	self.Roles:SetHeight(130)
 	self.RoleInfos:AddItem(self.Roles)	
 	self.PanelOptions:AddItem(self.RoleInfos)
@@ -291,7 +291,7 @@ function Damagelog:ReceiveLogs(empty, tbl, last)
 	if not IsValid(self.Menu) then return end
 	self.Damagelog:Clear()
 	if empty then
-		self.Damagelog:AddLine("", "", "Damagelog empty..")
+		self.Damagelog:AddLine("", "", "Nothing here...")
 	else
 		table.insert(self.loading, tbl)
 		if last then
@@ -347,7 +347,7 @@ net.Receive("DL_RefreshDamagelog", function()
 	if not LocalPlayer():CanUseDamagelog() then return end
 	if ValidPanel(Damagelog.Damagelog) then
 		local lines = Damagelog.Damagelog:GetLines()
-		if lines[1] and lines[1]:GetValue(3) == "Damagelog empty.." then
+		if lines[1] and lines[1]:GetValue(3) == "Nothing here..." then
 			Damagelog.Damagelog:Clear()
 		end
 		local rounds = Damagelog:GetSyncEnt():GetPlayedRounds()

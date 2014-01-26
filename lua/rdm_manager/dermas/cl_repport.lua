@@ -14,7 +14,7 @@ function PANEL:Init()
 	self.columnSheet:AddSheet("Logs before your death", self.logList, "icon16/application_view_list.png");
 	
 	local infoTyps = vgui.Create("azInfoText", self.reportList);
-	infoTyps:SetText("False reports will get you banned");
+	infoTyps:SetText("False reports will get you punished");
 	infoTyps:SetInfoColor("red");
 	infoTyps:SetPos(2,5);
 	infoTyps:SetSize(582, 24);

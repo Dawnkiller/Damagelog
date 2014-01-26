@@ -190,7 +190,7 @@ function Damagelog:SetDamageInfosLV(listview, att, victim, beg, t, result)
 		listview:AddLine("DamageInfos of "..victim.." and "..att.. " between "..beg.." and "..t..".")
 	end
 	if not result or table.Count(result) <= 0 then
-		listview:AddLine("Couldn't find any info")
+		listview:AddLine("Couldn't find anything...")
 	else
 		local nums = {}
 		local used_nicks = {}
@@ -232,11 +232,11 @@ function Damagelog:SetDamageInfosLV(listview, att, victim, beg, t, result)
 				end
 				local item
 				if i[2] == "crowbartir" then
-					item = listview:AddLine(string.format("%s - %s has shot with a Crowbar", string.FormattedTime(v, "%02i:%02i"), i[1]))
+					item = listview:AddLine(string.format("%s - %s has swung their crowber", string.FormattedTime(v, "%02i:%02i"), i[1]))
 				elseif i[2] == "crowbarpouss" then
-					item = listview:AddLine(string.format("%s - %s has pushed %s with a Crowbar", string.FormattedTime(v, "%02i:%02i"), i[1], i[3]))
+					item = listview:AddLine(string.format("%s - %s has pushed %s with a crowbar", string.FormattedTime(v, "%02i:%02i"), i[1], i[3]))
 				else
-					item = listview:AddLine(string.format("%s - %s has shot with %s", string.FormattedTime(v, "%02i:%02i"), i[1], self.weapon_table[i[2]] or i[2] or "(unknown weapon)"))
+					item = listview:AddLine(string.format("%s - %s has shot with %s", string.FormattedTime(v, "%02i:%02i"), i[1], self.weapon_table[i[2]] or i[2] or ""))
 				end
 				item.PaintOver = function()
 					if att and victim then

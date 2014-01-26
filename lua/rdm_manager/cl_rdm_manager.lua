@@ -25,7 +25,7 @@ hook.Add("OnPlayerChat", "DLRDM_Command", function(ply, text, teamOnly, isDead)
 	if (text == Damagelog.RDM_Manager_Command) then
 		if (ply == LocalPlayer()) then
 			if (LocalPlayer():Alive() and GetRoundState() == ROUND_ACTIVE) then
-				chat.AddText(Color(255, 62, 62), "You can't report when you are alive!");
+				chat.AddText(Color(255, 62, 62), "You can't report RDMs when you are alive!");
 			else
 				RunConsoleCommand("DLRDM_Repport");
 			end;
@@ -49,7 +49,7 @@ net.Receive("RDMAdd", function(len)
 	if (recue.index) then
 		recue.round = recue.round or 0;
 		recue.time = recue.time or 0;
-		recue.attackerMessage = recue.attackerMessage or "No message yet";
+		recue.attackerMessage = recue.attackerMessage or "No response yet";
 
 		Damagelog.rdmReporter.stored[recue.index] = recue;
 		
@@ -66,7 +66,7 @@ net.Receive("RDMRespond", function(len, ply)
 	-- if not cvars.Bool("ttt_dmglogs_rdmpopups") then return end
 
 	Damagelog.rdmReporter.respond = liste;
-	Damagelog.notify:AddMessage("You have "..count.." awaiting reports!");
+	Damagelog.notify:AddMessage("You have "..count.." unresolved reports!");
 
 	if (ValidPanel(Damagelog.rdmReporter.RespondPanel)) then
 		Damagelog.rdmReporter.RespondPanel:Close();
