@@ -31,7 +31,7 @@ function PANEL:Rebuild()
 		local time = util.SimpleTime(math.max(0, v.time), "%02i:%02i");
 
 		local infoTyps = vgui.Create("azInfoText", self);
-		infoTyps:SetText(v.victim.. " reported you at "..time.." after the round "..v.round..".");
+		infoTyps:SetText(v.victim.. " reported you at "..time.." after round "..v.round..".");
 		infoTyps:SetInfoColor("blue");
 		panelList:AddItem(infoTyps);
 
@@ -64,7 +64,7 @@ function PANEL:Rebuild()
 		end;
 
 		local buton = vgui.Create("DButton", self);
-		buton:SetText("Send my version");
+		buton:SetText("Send");
 		buton.DoClick = function()
 			net.Start("RDMRespond")
 				net.WriteString(string.sub(textEntry:GetValue(), 0, 500));
@@ -75,7 +75,7 @@ function PANEL:Rebuild()
 
 			buton:SetDisabled(true);
 
-			infoTyps:SetText("The respond has been send!");
+			infoTyps:SetText("Your response has been submitted!");
 			infoTyps:SetInfoColor("orange");
 
 			if (#Damagelog.rdmReporter.respond == 0) then

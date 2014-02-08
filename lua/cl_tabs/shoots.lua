@@ -11,7 +11,7 @@ function Damagelog:DrawShootsTab()
 		self.ShootTableTemp = {}
 		self.ReceivingST = true
 		self.ShootsList:Clear()
-		self.ShootsList:AddLine("Loading..")
+		self.ShootsList:AddLine("Loading...")
 		net.Start("DL_AskShootLogs")
 		net.WriteUInt(self.SelectedRound, 8)
 		net.SendToServer()
@@ -23,7 +23,7 @@ function Damagelog:DrawShootsTab()
 	self.ShootsList:AddColumn("")
 	self.Shoots:AddItem(self.ShootsList)
 	
-	self.Tabs:AddSheet("Shoots", self.Shoots, "icon16/page_white_find.png", false, false)
+	self.Tabs:AddSheet("Shot logs", self.Shoots, "icon16/page_white_find.png", false, false)
 
 end
 

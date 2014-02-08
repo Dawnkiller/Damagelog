@@ -3,7 +3,7 @@
 if SERVER then
 	--Damagelog:EventHook("Initialize")
 else
-	Damagelog:AddFilter("Show grenades", DAMAGELOG_FILTER_BOOL, true)
+	Damagelog:AddFilter("Show grenade throws", DAMAGELOG_FILTER_BOOL, true)
 	Damagelog:AddColor("Grenades", Color(0, 128, 0, 255))
 end
 
@@ -40,7 +40,7 @@ function event:IsAllowed(tbl)
 			return false
 		end
 	end
-	local dfilter = Damagelog.filter_settings["Show grenades"]
+	local dfilter = Damagelog.filter_settings["Show grenade throws"]
 	if not dfilter then return false end
 	return true
 	

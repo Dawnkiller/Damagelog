@@ -7,7 +7,7 @@ if SERVER then
 	Damagelog:EventHook("TTTC4Pickup")
 	Damagelog:EventHook("Initialize")
 else
-	Damagelog:AddFilter("Show disguising", DAMAGELOG_FILTER_BOOL, false)
+	Damagelog:AddFilter("Show disguisings", DAMAGELOG_FILTER_BOOL, false)
 	Damagelog:AddFilter("Show teleports", DAMAGELOG_FILTER_BOOL, true)
 	Damagelog:AddFilter("Show C4 logs", DAMAGELOG_FILTER_BOOL, true)
 	Damagelog:AddColor("Misc", Color(0, 179, 179, 255))
@@ -164,11 +164,11 @@ end
 function event:ToString(v)
 	local text
 	if v[1] == 1 then
-		return string.format("%s [%s] %s his disguiser", v[2], Damagelog:StrRole(v[3]), v[5] and "enabled" or "disabled")
+		return string.format("%s [%s] has %s their disguiser", v[2], Damagelog:StrRole(v[3]), v[5] and "enabled" or "disabled")
 	elseif v[1] == 2 then
 		return string.format("%s [%s] has teleported", v[2], Damagelog:StrRole(v[3]))
 	elseif v[1] == 3 then
-		return string.format("%s [%s] is spamming with the disguiser. No more disguise logs for him.", v[2], Damagelog:StrRole(v[3]))
+		return string.format("%s [%s] is spamming their disguiser. Disguise logging will be stopped.", v[2], Damagelog:StrRole(v[3]))
 	elseif v[1] == 4 then
 		return string.format("%s [%s] has disarmed the C4 of %s %s success.", v[2], Damagelog:StrRole(v[3]), v[5], v[6] and "with" or "without")
 	elseif v[1] == 5 then
@@ -185,7 +185,7 @@ function event:IsAllowed(tbl)
 	if pfilter then
 		if tbl[4] != pfilter then return false end
 	end
-	if (tbl[1] == 1 or tbl[1] == 3) and not Damagelog.filter_settings["Show disguising"] then return false end
+	if (tbl[1] == 1 or tbl[1] == 3) and not Damagelog.filter_settings["Show disguisings"] then return false end
 	if tbl[1] == 2 and not Damagelog.filter_settings["Show teleports"] then return false end
 	if (tbl[1] == 4 or tbl[1] == 5 or tbl[1] == 6 or tbl[1] == 7) and not Damagelog.filter_settings["Show C4 logs"] then return false end
 	return true

@@ -27,8 +27,8 @@ function Damagelog:About()
 	rdm_manager:SetText([[The RDM manager is a passive system built into the damage logs that allows admins to deal 
 with RDM in a timely fashion. When a report is filed, each party involved will be able to write 
 what happened and the victim will have access to the portion of the damage logs involving their 
-death. The accused will not be able to write his side of the story until they die, or the round 
-ends. You will be able to veiw the report, along with any pertinent logs. As an admin, you can 
+death. The accused will not be able to write their side of the story until they die, or the round 
+ends. Admins will be able to veiw the report, along with any pertinent logs. As an admin, you can 
 then take action against the participants. It is recommended that you discuss how the manager 
 will work with your admins carefully, so that it isn't abused, or used incorrectly.]])
 	rdm_manager:SetTextColor(Color(0,0,0))
@@ -46,7 +46,9 @@ will work with your admins carefully, so that it isn't abused, or used incorrect
 	credits:SetFont("DL_About_Text")
 	credits:SetText([[Tommynator (or tommy228) for coding the menu
 GuiGui and Hobbes for their help
-vercas for vON]])
+vercas for vON
+Short Circuit for fixing a few grammatical and spelling mistakes
+out of OCD]])
 	credits:SetTextColor(Color(0,0,0))
 	credits:SetPos(10, 195)
 	credits:SizeToContents()

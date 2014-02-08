@@ -3,8 +3,8 @@
 if SERVER then
 	Damagelog:EventHook("TTTOrderedEquipment")
 else
-	Damagelog:AddFilter("Show weapons buy", DAMAGELOG_FILTER_BOOL, true)
-	Damagelog:AddColor("Equipments", Color(128, 0, 128, 255))
+	Damagelog:AddFilter("Show weapon purchases", DAMAGELOG_FILTER_BOOL, true)
+	Damagelog:AddColor("Equipment Purchases", Color(128, 0, 128, 255))
 end
 
 local event = {}
@@ -25,7 +25,7 @@ if CLIENT then
 	hook.Add("Initialize", "Damagelog_InitializeEventWeapon", function()
 		event.Equips = {
 			[EQUIP_RADAR] = "a radar",
-			[EQUIP_ARMOR] = "an armor",
+			[EQUIP_ARMOR] = "a set of body armor",
 			[EQUIP_DISGUISE] = "a disguiser"
 		}
 	end)
@@ -49,14 +49,14 @@ function event:IsAllowed(tbl)
 			return false
 		end
 	end
-	local dfilter = Damagelog.filter_settings["Show weapons buy"]
+	local dfilter = Damagelog.filter_settings["Show weapon purchases"]
 	if not dfilter then return false end
 	return true
 
 end
 
 function event:GetColor(tbl)
-	return Damagelog:GetColor("Equipments")
+	return Damagelog:GetColor("Equipment Purchases")
 end
 
 function event:RightClick(line, tbl, text)
