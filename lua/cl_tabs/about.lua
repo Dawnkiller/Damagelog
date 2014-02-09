@@ -44,10 +44,10 @@ will work with your admins carefully, so that it isn't abused, or used incorrect
 	
 	local credits = vgui.Create("DLabel", panel)
 	credits:SetFont("DL_About_Text")
-	credits:SetText([[Tommynator (or tommy228) for coding the menu
-GuiGui and Hobbes for their help
-vercas for vON
-Short Circuit for fixing a few grammatical and spelling mistakes
+	credits:SetText([[-Tommynator (or tommy228) for coding the menu
+-GuiGui and Hobbes for their help
+-vercas for vON
+-Short Circuit for fixing a few grammatical and spelling mistakes
 out of OCD]])
 	credits:SetTextColor(Color(0,0,0))
 	credits:SetPos(10, 195)
@@ -55,7 +55,7 @@ out of OCD]])
 	
 	local donate = vgui.Create("DButton", panel)
 	donate:SetText("Donate")
-	donate:SetPos(10, 255)
+	donate:SetPos(10, 305)
 	donate:SetSize(70, 25)
 	donate.DoClick = function()
 		gui.OpenURL("http://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WS2TQJVV2ZUB2")
